@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
   Background,
   Controls,
@@ -12,6 +12,7 @@ import { NODE_TYPES, makeCfg, toGraph, SEED_NODES, SEED_EDGES } from "./graph.js
 import * as api from "./api.js";
 import Inspector from "./components/Inspector.jsx";
 import { Findings, FailureResult, RampResult, Explain } from "./components/Results.jsx";
+
 const SEV_COLOR = { high: "#d92d20", medium: "#f79009", low: "#98a2b3" };
 const RANK = { high: 3, medium: 2, low: 1 };
 
@@ -24,10 +25,25 @@ export default function App() {
   const [auditRes, setAuditRes] = useState(null);
   const [failRes, setFailRes] = useState(null);
   const [rampRes, setRampRes] = useState(null);
+  const [explainRes, setExplainRes] = useState(null);
   const [lost, setLost] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-    const [explainRes, setExplainRes] = useState(null);
+
+  const [theme, setTheme] = useState(() => {
+    try {
+      const saved = localStorage.getItem("theme");
+      if (saved) return saved;
+    } catch {}
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {}
+  }, [theme]);
 
   // Worst severity per node, used to color node borders after an audit.
   const worstByNode = useMemo(() => {
@@ -54,8 +70,9 @@ export default function App() {
             whiteSpace: "pre-line",
             textAlign: "center",
             borderRadius: 8,
-            border: `2px solid ${sev ? SEV_COLOR[sev] : "#475467"}`,
-            background: "#fff",
+            border: `2px solid ${sev ? SEV_COLOR[sev] : "var(--node-border)"}`,
+            background: "var(--node-bg)",
+            color: "var(--text)",
             fontSize: 12,
             width: 150,
           },
@@ -135,8 +152,6 @@ export default function App() {
     );
   };
 
-  //  const [explainRes, setExplainRes] = useState(null);
-
   return (
     <div className="app">
       <header>
@@ -157,6 +172,9 @@ export default function App() {
           </button>
           <button disabled={busy} onClick={doExplain}>
             Explain
+          </button>
+          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+            {theme === "dark" ? "Light mode" : "Dark mode"}
           </button>
         </div>
       </header>
@@ -221,6 +239,7 @@ export default function App() {
           <section>
             <Findings result={auditRes} />
           </section>
+
           <section>
             <Explain result={explainRes} />
           </section>

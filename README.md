@@ -80,3 +80,4 @@ failed while 600 passed, which I treat as a transient, so the 2-replica knee is 
 - `docker compose run` silently scaled the API back to one replica, which made the first
   2-replica results meaningless. Replica counts are now checked before and after every
   measurement and the run is marked INVALID if they change.
+  **Live demo:** https://scale-sense-teal.vercel.app (free-tier backend, the first request may take up to a minute)
