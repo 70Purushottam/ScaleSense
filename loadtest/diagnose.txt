@@ -1,0 +1,55 @@
+diagnose run 30-10-2026 13:12:33.59 
+NAME                  IMAGE                COMMAND                  SERVICE    CREATED          STATUS          PORTS
+loadtest-api-1        loadtest-api         "uvicorn main:app --…"   api        38 minutes ago   Up 38 minutes   
+loadtest-api-2        loadtest-api         "uvicorn main:app --…"   api        30 seconds ago   Up 30 seconds   
+loadtest-nginx-1      nginx:1.27-alpine    "/docker-entrypoint.…"   nginx      29 minutes ago   Up 14 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+loadtest-postgres-1   postgres:16-alpine   "docker-entrypoint.s…"   postgres   18 hours ago     Up 2 hours      5432/tcp
+loadtest-redis-1      redis:7-alpine       "docker-entrypoint.s…"   redis      18 hours ago     Up 2 hours      6379/tcp
+==== CPU samples during 450 rps, 2 replicas, all cached 
+loadtest-k6-run-50631211d5ef cpu=44.49% mem=146.8MiB / 7.606GiB
+loadtest-nginx-1 cpu=12.59% mem=22.37MiB / 7.606GiB
+loadtest-api-1 cpu=50.19% mem=79.39MiB / 7.606GiB
+crazy_morse cpu=0.75% mem=85.87MiB / 7.606GiB
+loadtest-postgres-1 cpu=0.00% mem=33.99MiB / 7.606GiB
+loadtest-redis-1 cpu=0.60% mem=7.352MiB / 7.606GiB
+sentinel-frontend cpu=0.00% mem=60.67MiB / 7.606GiB
+sentinel-backend cpu=0.15% mem=30.13MiB / 7.606GiB
+sentinel-mongo cpu=0.74% mem=93.99MiB / 7.606GiB
+-- 
+loadtest-k6-run-50631211d5ef cpu=43.85% mem=223MiB / 7.606GiB
+loadtest-nginx-1 cpu=12.10% mem=28.25MiB / 7.606GiB
+loadtest-api-1 cpu=48.57% mem=82.12MiB / 7.606GiB
+crazy_morse cpu=1.58% mem=85.56MiB / 7.606GiB
+loadtest-postgres-1 cpu=0.00% mem=34.33MiB / 7.606GiB
+loadtest-redis-1 cpu=0.70% mem=7.512MiB / 7.606GiB
+sentinel-frontend cpu=0.00% mem=60.67MiB / 7.606GiB
+sentinel-backend cpu=0.11% mem=30.14MiB / 7.606GiB
+sentinel-mongo cpu=0.87% mem=94.02MiB / 7.606GiB
+-- 
+loadtest-k6-run-50631211d5ef cpu=41.17% mem=286.6MiB / 7.606GiB
+loadtest-nginx-1 cpu=11.57% mem=37.78MiB / 7.606GiB
+loadtest-api-1 cpu=48.42% mem=84.87MiB / 7.606GiB
+crazy_morse cpu=0.75% mem=85.82MiB / 7.606GiB
+loadtest-postgres-1 cpu=0.00% mem=34MiB / 7.606GiB
+loadtest-redis-1 cpu=0.53% mem=8.281MiB / 7.606GiB
+sentinel-frontend cpu=0.00% mem=60.67MiB / 7.606GiB
+sentinel-backend cpu=0.11% mem=30.02MiB / 7.606GiB
+sentinel-mongo cpu=0.89% mem=94.43MiB / 7.606GiB
+-- 
+loadtest-k6-run-50631211d5ef cpu=8.98% mem=302.7MiB / 7.606GiB
+loadtest-nginx-1 cpu=4.61% mem=35.47MiB / 7.606GiB
+loadtest-api-1 cpu=47.89% mem=84.36MiB / 7.606GiB
+crazy_morse cpu=0.97% mem=85.62MiB / 7.606GiB
+loadtest-postgres-1 cpu=0.00% mem=34MiB / 7.606GiB
+loadtest-redis-1 cpu=0.64% mem=8.289MiB / 7.606GiB
+sentinel-frontend cpu=0.01% mem=60.67MiB / 7.606GiB
+sentinel-backend cpu=0.14% mem=30.01MiB / 7.606GiB
+sentinel-mongo cpu=1.02% mem=94.36MiB / 7.606GiB
+-- 
+rate=450 achieved=268 p95=7013ms fail=61.3% dropped=1676
+==== C2: 2 replicas, 90 percent cached, lower rates 
+rate=200 achieved=200 p95=5ms fail=0.0% dropped=0
+rate=250 achieved=250 p95=17ms fail=0.0% dropped=0
+rate=300 achieved=300 p95=43ms fail=0.0% dropped=0
+rate=350 achieved=349 p95=77ms fail=0.0% dropped=0
+done 

@@ -1,0 +1,81 @@
+{
+ "graph": {
+  "nodes": [
+   {
+    "id": "u",
+    "type": "client",
+    "qps": 100
+   },
+   {
+    "id": "gw",
+    "type": "service",
+    "replicas": 2
+   },
+   {
+    "id": "a",
+    "type": "service",
+    "replicas": 2
+   },
+   {
+    "id": "b",
+    "type": "service",
+    "replicas": 2
+   },
+   {
+    "id": "c",
+    "type": "service",
+    "replicas": 2
+   },
+   {
+    "id": "d",
+    "type": "service",
+    "replicas": 2
+   },
+   {
+    "id": "cache",
+    "type": "cache",
+    "replicas": 2,
+    "hit_rate": 0.9
+   },
+   {
+    "id": "db",
+    "type": "database",
+    "replicas": 2,
+    "capacity_qps": 800
+   }
+  ],
+  "edges": [
+   {
+    "source": "u",
+    "target": "gw"
+   },
+   {
+    "source": "gw",
+    "target": "a"
+   },
+   {
+    "source": "a",
+    "target": "b"
+   },
+   {
+    "source": "b",
+    "target": "c"
+   },
+   {
+    "source": "c",
+    "target": "d"
+   },
+   {
+    "source": "d",
+    "target": "cache"
+   },
+   {
+    "source": "cache",
+    "target": "db"
+   }
+  ]
+ },
+ "expected_findings": [
+  "long_sync_chain"
+ ]
+}

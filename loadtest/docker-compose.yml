@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: pw
+      POSTGRES_DB: app
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    cpus: 1.0
+
+  redis:
+    image: redis:7-alpine
+    cpus: 0.5
+
+  api:
+    build: ./app
+    environment:
+      DATABASE_URL: postgresql://postgres:pw@postgres:5432/app
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+    cpus: 0.5   # fixed CPU per replica makes saturation repeatable
+
+  nginx:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+
+  k6:
+    image: grafana/k6
+    profiles: ["load"]
+    volumes:
+      - ./k6:/scripts
+    depends_on:
+      - nginx

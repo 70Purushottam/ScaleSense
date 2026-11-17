@@ -1,0 +1,45 @@
+{
+ "graph": {
+  "nodes": [
+   {
+    "id": "u",
+    "type": "client",
+    "qps": 500
+   },
+   {
+    "id": "lb",
+    "type": "load_balancer"
+   },
+   {
+    "id": "api",
+    "type": "service",
+    "replicas": 3,
+    "capacity_qps": 500
+   },
+   {
+    "id": "db",
+    "type": "database",
+    "replicas": 2,
+    "capacity_qps": 800
+   }
+  ],
+  "edges": [
+   {
+    "source": "u",
+    "target": "lb"
+   },
+   {
+    "source": "lb",
+    "target": "api"
+   },
+   {
+    "source": "api",
+    "target": "db"
+   }
+  ]
+ },
+ "expected_findings": [
+  "single_point_of_failure:lb",
+  "unbuffered_database:db"
+ ]
+}

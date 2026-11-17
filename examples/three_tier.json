@@ -1,0 +1,9 @@
+{"nodes":[
+ {"id":"users","type":"client","qps":2000},
+ {"id":"lb","type":"load_balancer","capacity_qps":10000},
+ {"id":"api","type":"service","replicas":2,"capacity_qps":500,"latency_ms":40},
+ {"id":"db","type":"database","capacity_qps":800,"latency_ms":8}],
+ "edges":[
+ {"source":"users","target":"lb"},
+ {"source":"lb","target":"api"},
+ {"source":"api","target":"db"}]}

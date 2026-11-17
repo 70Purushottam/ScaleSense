@@ -1,0 +1,51 @@
+{
+ "graph": {
+  "nodes": [
+   {
+    "id": "u",
+    "type": "client",
+    "qps": 500
+   },
+   {
+    "id": "api",
+    "type": "service",
+    "replicas": 3,
+    "capacity_qps": 500
+   },
+   {
+    "id": "logger",
+    "type": "service",
+    "replicas": 2
+   },
+   {
+    "id": "cache",
+    "type": "cache",
+    "replicas": 2,
+    "hit_rate": 0.9
+   },
+   {
+    "id": "db",
+    "type": "database",
+    "replicas": 2,
+    "capacity_qps": 800
+   }
+  ],
+  "edges": [
+   {
+    "source": "u",
+    "target": "api"
+   },
+   {
+    "source": "api",
+    "target": "cache"
+   },
+   {
+    "source": "cache",
+    "target": "db"
+   }
+  ]
+ },
+ "expected_findings": [
+  "disconnected_node:logger"
+ ]
+}

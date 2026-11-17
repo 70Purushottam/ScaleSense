@@ -1,0 +1,34 @@
+validation run 31-10-2026  1:32:02.40 (v2, no-deps) 
+[ok] 2 replica(s) running, DNS lists 2 
+==== A: 2 replicas, all cached 
+rate=400 achieved=400 p95=5ms fail=0.0% dropped=0
+   api replicas before=2 after=2 
+rate=500 achieved=345 p95=5939ms fail=20.7% dropped=1023
+   api replicas before=2 after=2 
+rate=600 achieved=599 p95=242ms fail=0.0% dropped=0
+   api replicas before=2 after=2 
+rate=700 achieved=366 p95=8152ms fail=29.9% dropped=3551
+   api replicas before=2 after=2 
+rate=800 achieved=369 p95=8047ms fail=47.4% dropped=5992
+   api replicas before=2 after=2 
+[ok] 1 replica(s) running, DNS lists 1 
+==== B: 1 replica left after a failure, all cached 
+rate=300 achieved=300 p95=8ms fail=0.0% dropped=0
+   api replicas before=1 after=1 
+rate=350 achieved=350 p95=67ms fail=0.0% dropped=0
+   api replicas before=1 after=1 
+rate=400 achieved=399 p95=139ms fail=0.0% dropped=0
+   api replicas before=1 after=1 
+rate=500 achieved=232 p95=9804ms fail=71.4% dropped=3063
+   api replicas before=1 after=1 
+[ok] 2 replica(s) running, DNS lists 2 
+==== C: 2 replicas, 90 percent cached 
+rate=400 achieved=400 p95=4ms fail=0.0% dropped=0
+   api replicas before=2 after=2 
+rate=500 achieved=443 p95=1314ms fail=4.1% dropped=287
+   api replicas before=2 after=2 
+rate=600 achieved=479 p95=3151ms fail=9.7% dropped=628
+   api replicas before=2 after=2 
+rate=700 achieved=418 p95=7802ms fail=22.7% dropped=1819
+   api replicas before=2 after=2 
+done 
